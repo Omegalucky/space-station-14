@@ -99,11 +99,25 @@ public sealed partial class RCDSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RCDComponent component, MapInitEvent args)
     {
+        // Starlight-start
+        // Fold in the recipes of any devices this one stands in for, before the emptiness check
+        // below. A composite device can then declare no recipes of its own.
+        foreach (var sourceId in component.ComposeFrom)
+        {
+            if (_protoManager.TryIndex(sourceId, out var sourceProto)
+                && sourceProto.TryGetComponent<RCDComponent>(out var sourceRcd, _entityManager.ComponentFactory))
+                component.AvailablePrototypes.UnionWith(sourceRcd.AvailablePrototypes);
+            else
+                Log.Error($"{ToPrettyString(uid)} composes from '{sourceId}', which is not an RCD.");
+        }
+        // Starlight-end
+
         // On init, set the RCD to its first available recipe
         if (component.AvailablePrototypes.Count > 0)
         {
             // Starlight edit Start: RPD
-            if (component.IsRpd)
+            // Composite devices span several toolsets, so a pipe is not a sensible default for them.
+            if (component.IsRpd && !component.IsComposite)
                 component.ProtoId = "PipeStraight";
             else
                 component.ProtoId = component.AvailablePrototypes.ElementAt(0);
@@ -172,7 +186,7 @@ public sealed partial class RCDSystem : EntitySystem
         args.PushMarkup(msg);
 
     // Starlight Start
-        if (component.IsRpd || component.IsRPLD)
+        if (ShowsPipeMode(uid, component))
         {
             var modeLoc = $"rcd-rpd-mode-{component.CurrentMode.ToString().ToLowerInvariant()}";
             args.PushMarkup(Loc.GetString("rcd-component-examine-rpd-mode", ("mode", Loc.GetString(modeLoc))));
@@ -203,7 +217,7 @@ public sealed partial class RCDSystem : EntitySystem
 
     private void OnGetUtilityVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<UtilityVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || (!component.IsRpd && !component.IsRPLD))
+        if (!args.CanAccess || !args.CanInteract || !ShowsPipeMode(uid, component))
             return;
 
         var verb = new UtilityVerb
@@ -219,7 +233,7 @@ public sealed partial class RCDSystem : EntitySystem
 
     private void OnGetAlternativeVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || (!component.IsRpd && !component.IsRPLD) || !args.Using.HasValue)
+        if (!args.CanAccess || !args.CanInteract || !ShowsPipeMode(uid, component) || !args.Using.HasValue)
             return;
 
         // Only show when alt-clicking the RPD itself (args.Using is the held item)
@@ -753,8 +767,14 @@ public sealed partial class RCDSystem : EntitySystem
         else
         {
             // Starlight Start: RPD/RPLD
-            // The object is not in the RPD whitelist
-            if (!TryComp<RCDDeconstructableComponent>(target, out var deconstructible) || !deconstructible.RpdDeconstructable && component.IsRpd || !deconstructible.RpldDeconstructable && component.IsRPLD)
+            // The object is not in the RPD whitelist.
+            // Composite devices skip the narrowing: they stand in for several tools at once, so they
+            // deconstruct anything any of those tools could rather than one tool's whitelist.
+            var narrow = !component.IsComposite;
+
+            if (!TryComp<RCDDeconstructableComponent>(target, out var deconstructible)
+                || narrow && !deconstructible.RpdDeconstructable && component.IsRpd
+                || narrow && !deconstructible.RpldDeconstructable && component.IsRPLD)
             {
                 if (popMsgs)
                     _popup.PopupClient(Loc.GetString("rcd-component-deconstruct-target-not-on-whitelist-message"), uid, user);
@@ -941,6 +961,23 @@ public sealed partial class RCDSystem : EntitySystem
             return RpdMode.Free; // default to Free mode
 
         return component.CurrentMode;
+    }
+
+    /// <summary>
+    /// Whether the pipe-layer mode UI (switch verb, item status, examine line) applies right now.
+    /// The layer system does nothing unless the selected recipe is layered, so the UI follows the
+    /// selection rather than the device. Reads ProtoId, which is networked, rather than
+    /// CachedPrototype, which is nullable and local, so client and server always agree.
+    /// </summary>
+    public bool ShowsPipeMode(EntityUid uid, RCDComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        if (!component.IsRpd && !component.IsRPLD)
+            return false;
+
+        return _protoManager.TryIndex(component.ProtoId, out var proto) && proto.HasLayers;
     }
 
     public void SetSelectedLayer(Entity<RCDComponent> ent, AtmosPipeLayer layer)

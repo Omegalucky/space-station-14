@@ -1011,6 +1011,34 @@
     rechargeDuration: 1
 
 # =============================================================================
+# Combined RCD/RPD - chief engineer's rapid prototyper
+# composeFrom pulls in the recipes of the RCD and the RPD at map init, so this
+# stays in sync as either of those devices gains or loses recipes.
+# =============================================================================
+- type: entity
+  id: RCDChiefEngineerPrototyper
+  parent: RCD
+  name: chief engineer's rapid prototyper
+  description: A highly advanced fabricator that merges rapid construction and rapid piping into a single chassis, creating compressed matter on the fly. The mode selector takes some getting used to.
+  components:
+  - type: RCD
+    isRpd: true
+    composeFrom:
+    - RCD
+    - RPD
+  - type: LimitedCharges
+    maxCharges: 60
+  - type: AutoRecharge
+    rechargeDuration: 15
+  - type: Item
+    shape:
+    - 0,0,2,1 # 3 wide x 2 high - bulkier than a plain RCD, it is two tools in one chassis
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/rcd.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Tools/rcd.rsi
+
+# =============================================================================
 # RPLD (Rapid Plumbing Device) - places plumbing ducts and machines
 # =============================================================================
 - type: entity

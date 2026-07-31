@@ -16,28 +16,40 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
 {
     private const string TopLevelActionCategory = "Main";
 
-    private static readonly Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)> PrototypesGroupingInfo
-        = new Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)>
+    // Starlight-edit: the trailing Tool field groups categories for devices that carry more than one toolset.
+    private static readonly Dictionary<string, (string Tooltip, SpriteSpecifier Sprite, string Tool)> PrototypesGroupingInfo
+        = new Dictionary<string, (string Tooltip, SpriteSpecifier Sprite, string Tool)>
         {
-            ["WallsAndFlooring"] = ("rcd-component-walls-and-flooring", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RCD/walls_and_flooring.png"))),
-            ["WindowsAndGrilles"] = ("rcd-component-windows-and-grilles", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RCD/windows_and_grilles.png"))),
-            ["Airlocks"] = ("rcd-component-airlocks", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RCD/airlocks.png"))),
-            ["Electrical"] = ("rcd-component-electrical", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/multicoil.png"))),
-            ["Lighting"] = ("rcd-component-lighting", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/lighting.png"))),
+            ["WallsAndFlooring"] = ("rcd-component-walls-and-flooring", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RCD/walls_and_flooring.png")), "Construction"),
+            ["WindowsAndGrilles"] = ("rcd-component-windows-and-grilles", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RCD/windows_and_grilles.png")), "Construction"),
+            ["Airlocks"] = ("rcd-component-airlocks", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RCD/airlocks.png")), "Construction"),
+            ["Electrical"] = ("rcd-component-electrical", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/multicoil.png")), "Construction"),
+            ["Lighting"] = ("rcd-component-lighting", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/lighting.png")), "Construction"),
             // Starlight Start: RPD
-            ["Piping"] = ("rpd-component-piping", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/fourway.png"))),
-            ["AtmosphericUtility"] = ("rpd-component-atmospheric-utility", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/v_gas_mixer.png"))),
-            ["PumpsValves"] = ("rpd-component-pumps", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/pump_volume.png"))),
-            ["Vents"] = ("rpd-component-vents", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/vent_passive.png"))),
-            ["SensorsMonitors"] = ("rpd-component-sensors-monitors", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/airalarm.png"))),
-            ["InterfacesStorage"] = ("rpd-component-interfaces-storage", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/port.png"))),
+            ["Piping"] = ("rpd-component-piping", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/fourway.png")), "Atmospherics"),
+            ["AtmosphericUtility"] = ("rpd-component-atmospheric-utility", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/v_gas_mixer.png")), "Atmospherics"),
+            ["PumpsValves"] = ("rpd-component-pumps", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/pump_volume.png")), "Atmospherics"),
+            ["Vents"] = ("rpd-component-vents", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/vent_passive.png")), "Atmospherics"),
+            ["SensorsMonitors"] = ("rpd-component-sensors-monitors", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/airalarm.png")), "Atmospherics"),
+            ["InterfacesStorage"] = ("rpd-component-interfaces-storage", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPD/port.png")), "Atmospherics"),
             // Starlight End: RPD
             // Starlight Start: RPLD
-            ["PlumbingDucts"] = ("rpld-component-ducts", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPLD/category_ducts.png"))),
-            ["PlumbingSupply"] = ("rpld-component-supply", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPLD/tank.png"))),
-            ["PlumbingProduction"] = ("rpld-component-production", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPLD/reaction_chamber.png"))),
+            ["PlumbingDucts"] = ("rpld-component-ducts", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPLD/category_ducts.png")), "Plumbing"),
+            ["PlumbingSupply"] = ("rpld-component-supply", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPLD/tank.png")), "Plumbing"),
+            ["PlumbingProduction"] = ("rpld-component-production", new SpriteSpecifier.Texture(new ResPath("/Textures/_Starlight/Interface/Radial/RPLD/reaction_chamber.png")), "Plumbing"),
             // Starlight End: RPLD
         };
+
+    // Starlight-start
+    // Icon and label for each tool ring. Only rendered when a device spans several tools.
+    private static readonly Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)> ToolGroupingInfo
+        = new Dictionary<string, (string Tooltip, SpriteSpecifier Sprite)>
+        {
+            ["Construction"] = ("rcd-component-tool-group-construction", new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/rcd.rsi"), "icon")),
+            ["Atmospherics"] = ("rcd-component-tool-group-atmospherics", new SpriteSpecifier.Rsi(new ResPath("_Starlight/Objects/Tools/rpd.rsi"), "icon")),
+            ["Plumbing"] = ("rcd-component-tool-group-plumbing", new SpriteSpecifier.Rsi(new ResPath("_Starlight/Objects/Tools/rpld.rsi"), "icon")),
+        };
+    // Starlight-end
 
     private bool IsRpd => EntMan.TryGetComponent<RCDComponent>(Owner, out var rcd) && rcd.IsRpd; // Starlight: RPD
 
@@ -101,24 +113,50 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
             list.Add(actionOption);
         }
 
-        var models = new RadialMenuOptionBase[buttonsByCategory.Count + topLevelActions.Count];
-        var i = 0;
+        // Starlight-start
+        // Bucket the category rings by tool group, and only insert the extra
+        // tool-selection ring when this device actually spans more than one group.
+        var categoryOptionsByGroup = new Dictionary<string, List<RadialMenuOptionBase>>();
+
         foreach (var (key, list) in buttonsByCategory)
         {
             var groupInfo = PrototypesGroupingInfo[key];
-            models[i] = new RadialMenuNestedLayerOption(list)
+            var categoryOption = new RadialMenuNestedLayerOption(list)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(groupInfo.Sprite),
                 ToolTip = Loc.GetString(groupInfo.Tooltip)
             };
-            i++;
+
+            if (!categoryOptionsByGroup.TryGetValue(groupInfo.Tool, out var groupList))
+            {
+                groupList = new List<RadialMenuOptionBase>();
+                categoryOptionsByGroup.Add(groupInfo.Tool, groupList);
+            }
+
+            groupList.Add(categoryOption);
         }
 
-        foreach (var action in topLevelActions)
+        var models = new List<RadialMenuOptionBase>();
+        var wrapInToolGroups = categoryOptionsByGroup.Count > 1;
+
+        foreach (var (toolGroup, categoryOptions) in categoryOptionsByGroup)
         {
-            models[i] = action;
-            i++;
+            if (!wrapInToolGroups || !ToolGroupingInfo.TryGetValue(toolGroup, out var toolInfo))
+            {
+                models.AddRange(categoryOptions);
+                continue;
+            }
+
+            models.Add(new RadialMenuNestedLayerOption(categoryOptions)
+            {
+                IconSpecifier = RadialMenuIconSpecifier.With(toolInfo.Sprite),
+                ToolTip = Loc.GetString(toolInfo.Tooltip)
+            });
         }
+        // Starlight-end
+
+        foreach (var action in topLevelActions)
+            models.Add(action);
 
         return models;
     }

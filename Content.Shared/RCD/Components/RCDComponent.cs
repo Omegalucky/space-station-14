@@ -23,6 +23,21 @@ public sealed partial class RCDComponent : Component
     [DataField, AutoNetworkedField]
     public HashSet<ProtoId<RCDPrototype>> AvailablePrototypes { get; set; } = new();
 
+    // Starlight-start
+    /// <summary>
+    /// Other RCD-like devices whose recipes get folded into <see cref="AvailablePrototypes"/> on map init.
+    /// Lets a combined device (e.g. the CE's rapid prototyper) track the tools it stands in for instead of
+    /// carrying a hand-maintained copy of their recipes. Leave empty for a normal, self-contained device.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> ComposeFrom = new();
+
+    /// <summary>
+    /// True when this device merges several toolsets, which relaxes tool-specific restrictions.
+    /// </summary>
+    public bool IsComposite => ComposeFrom.Count > 0;
+    // Starlight-end
+
     /// <summary>
     /// Sound that plays when a RCD operation successfully completes
     /// </summary>

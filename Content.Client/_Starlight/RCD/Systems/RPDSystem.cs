@@ -28,22 +28,26 @@ public sealed class RPDSystem : EntitySystem
         };
 
         private readonly EntityUid _uid;
-        private readonly bool _isRpd;
         private readonly RCDSystem _rcdSystem;
 
         public RPDModeStatusControl(Entity<RCDComponent> entity)
         {
             _uid = entity.Owner;
-            _isRpd = entity.Comp.IsRpd || entity.Comp.IsRPLD;
             _rcdSystem = Get<RCDSystem>();
             AddChild(_label);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
-            if (!_isRpd) return;
-
             base.FrameUpdate(args);
+
+            // Re-checked every frame so the readout follows the selected recipe rather than being
+            // fixed at construction. The layer mode is meaningless for unlayered recipes.
+            var show = _rcdSystem.ShowsPipeMode(_uid);
+            _label.Visible = show;
+
+            if (!show)
+                return;
 
             var currentMode = _rcdSystem.GetCurrentRpdMode(_uid);
 

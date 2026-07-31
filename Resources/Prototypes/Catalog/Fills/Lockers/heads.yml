@@ -253,8 +253,7 @@
     - id: AstroNavCartridge #FH
     - id: SheetSteel #FH
     - id: SheetGlass #FH
-    - id: RCDChiefEngineer
-    - id: RPD # Starlight: RPD
+    - id: RCDChiefEngineerPrototyper # Starlight-edit: combined RCD/RPD, replaces RCDChiefEngineer + RPD
     - id: RCDAmmo
     - id: RubberStampCE
     - id: MetalFoamGrenade

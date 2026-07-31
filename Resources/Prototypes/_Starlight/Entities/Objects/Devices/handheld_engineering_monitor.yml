@@ -1,0 +1,69 @@
+- type: entity
+  name: handheld engineering monitor
+  parent: BaseHandheldComputer
+  id: HandheldEngineeringMonitor
+  description: A hand-held diagnostic slate. The main screen maps the station's power network, while a second screen pages through atmospheric alarms.
+  components:
+  # TODO: placeholder sprite, borrowed from the handheld mass scanner until this gets its own RSI.
+  - type: Item
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+  - type: Sprite
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: scanner
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 1.5
+
+  # Using the monitor in hand brings up both screens at once, and closing the power one closes both.
+  # The power screen is the primary, so it is what enforces the battery, reach and hand requirements.
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
+  - type: ActivatableUI
+    key: enum.PowerMonitoringConsoleUiKey.Key
+    inHandsOnly: true
+    singleUser: true
+  - type: AtmosAlertsComputer
+  - type: CompanionActivatableUI
+    keys:
+    - enum.AtmosAlertsComputerUiKey.Key
+
+  - type: UserInterface
+    interfaces:
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - InspectingPower
+    - AtmosphericAlertsComputer
+    - DeviceMonitoringAndControl
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  id: HandheldEngineeringMonitorEmpty
+  parent: HandheldEngineeringMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        blacklist:
+          tags:
+          - MechReactor

@@ -114,7 +114,7 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
         }
 
         // Starlight-start
-        // Bucket the category rings by tool group, and only insert the extra
+        // Group the category rings by tool, and only insert the extra
         // tool-selection ring when this device actually spans more than one group.
         var categoryOptionsByGroup = new Dictionary<string, List<RadialMenuOptionBase>>();
 
@@ -147,16 +147,27 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
                 continue;
             }
 
-            models.Add(new RadialMenuNestedLayerOption(categoryOptions)
+            // Top level actions (deconstruct) sit inside each tool's ring rather than above them
+            // intentionally to preserve muscle memory from the RCD and RPD.
+            var groupContents = new List<RadialMenuOptionBase>(categoryOptions);
+
+            foreach (var action in topLevelActions)
+                groupContents.Add(action);
+
+            models.Add(new RadialMenuNestedLayerOption(groupContents)
             {
                 IconSpecifier = RadialMenuIconSpecifier.With(toolInfo.Sprite),
                 ToolTip = Loc.GetString(toolInfo.Tooltip)
             });
         }
-        // Starlight-end
 
-        foreach (var action in topLevelActions)
-            models.Add(action);
+        // Single toolset devices keep their top level actions at the root.
+        if (!wrapInToolGroups)
+        {
+            foreach (var action in topLevelActions)
+                models.Add(action);
+        }
+        // Starlight-end
 
         return models;
     }

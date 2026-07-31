@@ -256,7 +256,8 @@
     - id: RCDChiefEngineer
     - id: RPD # Starlight: RPD
     - id: RCDAmmo
-    - id: HandheldEngineeringMonitor # Starlight-edit: CE's handheld power and atmospherics monitor
+    - id: HandheldPowerMonitor # Starlight-edit: CE's handheld power monitor
+    - id: HandheldAtmosphericsMonitor # Starlight-edit: CE's handheld atmospheric alarms monitor
     - id: RubberStampCE
     - id: MetalFoamGrenade
     - id: PlushieMatthew #starlight

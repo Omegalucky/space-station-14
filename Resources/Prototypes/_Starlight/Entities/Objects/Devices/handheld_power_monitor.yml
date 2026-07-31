@@ -1,8 +1,8 @@
 - type: entity
-  name: handheld engineering monitor
-  parent: BaseHandheldComputer
-  id: HandheldEngineeringMonitor
-  description: A hand-held diagnostic slate. The main screen maps the station's power network, while a second screen pages through atmospheric alarms.
+  name: handheld power monitor
+  parent: [ PowerCellSlotMediumItem, BaseHandheldComputer ] # Medium battery
+  id: HandheldPowerMonitor
+  description: A hand-held diagnostic slate that maps out the station's power network.
   components:
   # TODO: placeholder sprite, borrowed from the handheld mass scanner until this gets its own RSI.
   - type: Item
@@ -27,37 +27,26 @@
           Empty: { visible: false }
   - type: PowerCellDraw
     drawRate: 1.5
-
-  # Using the monitor in hand brings up both screens at once, and closing the power one closes both.
-  # The power screen is the primary, so it is what enforces the battery, reach and hand requirements.
   - type: PowerMonitoringConsole
   - type: PowerMonitoringCableNetworks
   - type: ActivatableUI
     key: enum.PowerMonitoringConsoleUiKey.Key
     inHandsOnly: true
     singleUser: true
-  - type: AtmosAlertsComputer
-  - type: CompanionActivatableUI
-    keys:
-    - enum.AtmosAlertsComputerUiKey.Key
-
   - type: UserInterface
     interfaces:
       enum.PowerMonitoringConsoleUiKey.Key:
         type: PowerMonitoringConsoleBoundUserInterface
-      enum.AtmosAlertsComputerUiKey.Key:
-        type: AtmosAlertsComputerBoundUserInterface
   - type: GuideHelp
     guides:
     - InspectingPower
-    - AtmosphericAlertsComputer
     - DeviceMonitoringAndControl
   - type: StaticPrice
     price: 200
 
 - type: entity
-  id: HandheldEngineeringMonitorEmpty
-  parent: HandheldEngineeringMonitor
+  id: HandheldPowerMonitorEmpty
+  parent: HandheldPowerMonitor
   suffix: Empty
   components:
   - type: ItemSlots

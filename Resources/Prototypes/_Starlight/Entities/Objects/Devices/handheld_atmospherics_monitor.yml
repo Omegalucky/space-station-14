@@ -1,0 +1,57 @@
+- type: entity
+  name: handheld atmospherics monitor
+  parent: [ PowerCellSlotMediumItem, BaseHandheldComputer ] # Medium battery
+  id: HandheldAtmosphericsMonitor
+  description: A hand-held diagnostic slate that pages through the station's atmospheric alarms.
+  components:
+  # TODO: placeholder sprite, borrowed from the gas analyzer until this gets its own RSI.
+  - type: Item
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+  - type: Sprite
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: working
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 1.5
+  - type: AtmosAlertsComputer
+  - type: ActivatableUI
+    key: enum.AtmosAlertsComputerUiKey.Key
+    inHandsOnly: true
+    singleUser: true
+  - type: UserInterface
+    interfaces:
+      enum.AtmosAlertsComputerUiKey.Key:
+        type: AtmosAlertsComputerBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - AtmosphericAlertsComputer
+    - DeviceMonitoringAndControl
+  - type: StaticPrice
+    price: 200
+
+- type: entity
+  id: HandheldAtmosphericsMonitorEmpty
+  parent: HandheldAtmosphericsMonitor
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        blacklist:
+          tags:
+          - MechReactor

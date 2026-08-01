@@ -11,5 +11,6 @@ rcd-rpd-mode-quaternary = Quaternary
 rcd-rpd-mode-quinary = Quinary
 rcd-rpd-mode-free = Free
 rcd-component-examine-rpd-mode = Current mode: [color=cyan]{$mode}[/color]
+rpd-color-unpainted = Unpainted
 rcd-verb-switch-mode = Switch mode
 rcd-item-status-mode = Mode: {$mode}

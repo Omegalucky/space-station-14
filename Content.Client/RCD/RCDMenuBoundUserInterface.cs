@@ -1,5 +1,6 @@
 using Content.Client.Popups;
 using Content.Client.UserInterface.Controls;
+using Content.Client._Starlight.RCD.UI;
 using Content.Shared.RCD;
 using Content.Shared.RCD.Components;
 using JetBrains.Annotations;
@@ -75,8 +76,29 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
         var models = ConvertToButtons(rcd.AvailablePrototypes);
         _menu.SetButtons(models);
 
+        // Starlight-start
+        // Devices that cannot paint what they build ship no palette, so they get no strip.
+        // Rebuilt on each open, which is also how the highlight picks up the current selection.
+        if (rcd.PipeColorPalette.Count > 0)
+        {
+            var colorStrip = new RPDColorStrip();
+            colorStrip.Populate(rcd.PipeColorPalette, rcd.PipeColor);
+            colorStrip.ColorSelected += OnColorSelected;
+            _menu.AddPersistentChild(colorStrip);
+        }
+        // Starlight-end
+
         _menu.OpenOverMouseScreenPosition();
     }
+
+    // Starlight-start
+    private void OnColorSelected(string? key)
+    {
+        // Unlike picking a recipe, this leaves the menu open, so the player can set a colour and
+        // then go on to choose what to build with it.
+        SendMessage(new RCDSetPipeColorMessage(key));
+    }
+    // Starlight-end
 
     private IEnumerable<RadialMenuOptionBase> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
     {

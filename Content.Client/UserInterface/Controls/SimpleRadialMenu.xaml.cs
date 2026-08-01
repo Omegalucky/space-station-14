@@ -219,7 +219,7 @@ public sealed partial class SimpleRadialMenu : RadialMenu
         var toRemove = new List<Control>(ChildCount);
         foreach (var child in Children)
         {
-            if (child != ContextualButton && child != MenuOuterAreaButton)
+            if (child != ContextualButton && child != MenuOuterAreaButton && !IsPersistentChild(child)) // Starlight-edit: keep persistent children across rebuilds
             {
                 toRemove.Add(child);
             }

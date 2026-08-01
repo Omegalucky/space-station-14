@@ -973,6 +973,21 @@
     - Deconstruct
     - AirAlarm
     - AirSensor
+    # Hex values are taken from the spray painter's palette so a pipe laid in "distro" here
+    # matches one painted "distro" there. Keep the two in step when either changes.
+    # Kept shorter than the painter's full list - these are swatches in a strip, not a scrolling list.
+    pipeColorPalette:
+      red: '#FF1212FF'
+      yellow: '#B3A234FF'
+      brown: '#947507FF'
+      green: '#3AB334FF'
+      cyan: '#03FCD3FF'
+      blue: '#0335FCFF'
+      purple: '#AA7DCEFF'
+      white: '#FFFFFFFF'
+      black: '#333333FF'
+      waste: '#990000'
+      distro: '#0055cc'
   - type: LimitedCharges
     maxCharges: 90
   - type: Sprite
@@ -1026,6 +1041,20 @@
     composeFrom:
     - RCD
     - RPD
+    # composeFrom only folds in recipes, so the palette is repeated here rather than inherited.
+    # Keep in step with the RPD's palette above.
+    pipeColorPalette:
+      red: '#FF1212FF'
+      yellow: '#B3A234FF'
+      brown: '#947507FF'
+      green: '#3AB334FF'
+      cyan: '#03FCD3FF'
+      blue: '#0335FCFF'
+      purple: '#AA7DCEFF'
+      white: '#FFFFFFFF'
+      black: '#333333FF'
+      waste: '#990000'
+      distro: '#0055cc'
   - type: LimitedCharges
     maxCharges: 60
   - type: AutoRecharge

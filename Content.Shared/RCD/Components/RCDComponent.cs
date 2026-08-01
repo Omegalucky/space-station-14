@@ -83,6 +83,27 @@ public sealed partial class RCDComponent : Component
     public bool IsRPLD { get; set; } = false;
     // Starlight End: RPLD support
 
+    // Starlight-start
+    /// <summary>
+    /// Pipe colours this device can paint what it builds with, keyed by the name shown in the UI.
+    /// Devices that do not paint leave this empty, which is what keeps the colour strip off the
+    /// RCD and the RPLD.
+    /// </summary>
+    /// <remarks>
+    /// Not networked: it never changes at runtime, so the client reads it straight off the
+    /// prototype. Same arrangement as the spray painter's palette.
+    /// </remarks>
+    [DataField]
+    public Dictionary<string, Color> PipeColorPalette = new();
+
+    /// <summary>
+    /// Key into <see cref="PipeColorPalette"/> for the colour applied to whatever gets built next,
+    /// or null to leave it whatever colour its prototype ships with.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string? PipeColor;
+    // Starlight-end
+
     /// <summary>
     /// The direction constructed entities will face upon spawning
     /// </summary>

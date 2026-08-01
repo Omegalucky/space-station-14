@@ -63,6 +63,9 @@ public class RadialMenu : BaseWindow
     private readonly List<Control> _path = new();
     private string? _backButtonStyleClass;
     private string? _closeButtonStyleClass;
+    // Starlight-start
+    private readonly HashSet<Control> _persistentChildren = new();
+    // Starlight-end
 
     /// <summary>
     /// A free floating menu which enables the quick display of one or more radial containers
@@ -102,10 +105,37 @@ public class RadialMenu : BaseWindow
         // Hide any further add children, unless its promoted to the active layer
         OnChildAdded += child =>
         {
+            // Starlight-edit: persistent children are not layers, so they keep their own visibility.
+            if (_persistentChildren.Contains(child))
+                return;
+
             child.Visible = GetCurrentActiveLayer() == child;
             SetupContextualButtonData(child);
         };
     }
+
+    // Starlight-start
+    /// <summary>
+    /// Adds a child that is not a menu layer. It stays visible as the user moves between layers,
+    /// instead of being hidden whenever the active layer changes.
+    /// </summary>
+    /// <remarks>
+    /// Added last so it draws over <see cref="MenuOuterAreaButton"/> and takes clicks before that
+    /// button can close the menu underneath it.
+    /// </remarks>
+    public void AddPersistentChild(Control child)
+    {
+        // Registered before parenting, so the OnChildAdded hook above already knows to skip it.
+        _persistentChildren.Add(child);
+        AddChild(child);
+    }
+
+    /// <summary>
+    /// Whether the given child was added via <see cref="AddPersistentChild"/> and so should be
+    /// left alone by anything that manipulates layers.
+    /// </summary>
+    public bool IsPersistentChild(Control child) => _persistentChildren.Contains(child);
+    // Starlight-end
 
     private void SetupContextualButtonData(Control child)
     {
@@ -135,7 +165,7 @@ public class RadialMenu : BaseWindow
 
     private Control? GetCurrentActiveLayer()
     {
-        var children = Children.Where(x => x != ContextualButton && x != MenuOuterAreaButton);
+        var children = Children.Where(x => x != ContextualButton && x != MenuOuterAreaButton && !_persistentChildren.Contains(x)); // Starlight-edit: persistent children are not layers
 
         if (!children.Any())
             return null;
@@ -154,7 +184,7 @@ public class RadialMenu : BaseWindow
 
         foreach (var child in Children)
         {
-            if (child == ContextualButton || child == MenuOuterAreaButton)
+            if (child == ContextualButton || child == MenuOuterAreaButton || _persistentChildren.Contains(child)) // Starlight-edit: persistent children are not layers
                 continue;
 
             // Hide layers which are not of interest
@@ -210,7 +240,7 @@ public class RadialMenu : BaseWindow
         // Hide all children except the contextual button
         foreach (var child in Children)
         {
-            if (child != ContextualButton && child != MenuOuterAreaButton)
+            if (child != ContextualButton && child != MenuOuterAreaButton && !_persistentChildren.Contains(child)) // Starlight-edit: persistent children are not layers
                 child.Visible = false;
         }
 

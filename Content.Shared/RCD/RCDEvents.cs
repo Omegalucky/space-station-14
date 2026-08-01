@@ -43,6 +43,29 @@ public sealed class RPDSelectedLayerEvent : EntityEventArgs
 }
 // Starlight End: RPD/RPLD
 
+// Starlight-start
+/// <summary>
+/// Sent when the player picks a swatch from the pipe colour strip under the RPD's radial menu.
+/// </summary>
+/// <remarks>
+/// Carries the palette key rather than the colour itself, so the server resolves the colour
+/// against its own copy of the palette and a modified client cannot ask for an arbitrary one.
+/// A null key is the "leave it unpainted" swatch.
+/// </remarks>
+[Serializable, NetSerializable]
+public sealed class RCDSetPipeColorMessage(string? key) : BoundUserInterfaceMessage
+{
+    public string? Key = key;
+}
+
+/// <summary>
+/// Raised on an entity an RCD-family device has just built, when that device has a pipe colour
+/// selected. Handled on the server, where the pipe colour component lives.
+/// </summary>
+[ByRefEvent]
+public record struct RCDPipeColorEvent(Color Color);
+// Starlight-end
+
 [Serializable, NetSerializable]
 public enum RcdUiKey : byte
 {

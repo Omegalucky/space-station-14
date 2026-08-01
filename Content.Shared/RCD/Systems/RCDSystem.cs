@@ -92,6 +92,7 @@ public sealed partial class RCDSystem : EntitySystem
         SubscribeNetworkEvent<RPDSelectedLayerEvent>(OnRPDSelectedLayerEvent);
         SubscribeLocalEvent<RCDComponent, GetVerbsEvent<UtilityVerb>>(OnGetUtilityVerb);
         SubscribeLocalEvent<RCDComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
+        SubscribeLocalEvent<RCDComponent, RCDSetPipeColorMessage>(OnSetPipeColor);
         // Starlight End
     }
 
@@ -213,6 +214,17 @@ public sealed partial class RCDSystem : EntitySystem
             selectedLayer = AtmosPipeLayer.Tertiary;
 
         rcd.LastSelectedLayer = selectedLayer;
+    }
+
+    private void OnSetPipeColor(EntityUid uid, RCDComponent component, RCDSetPipeColorMessage args)
+    {
+        // Null is the "leave it unpainted" swatch. Anything else has to be one of this device's
+        // own colours, so the palette stays the only source of colours it can apply.
+        if (args.Key != null && !component.PipeColorPalette.ContainsKey(args.Key))
+            return;
+
+        component.PipeColor = args.Key;
+        Dirty(uid, component);
     }
 
     private void OnGetUtilityVerb(EntityUid uid, RCDComponent component, GetVerbsEvent<UtilityVerb> args)
@@ -896,6 +908,17 @@ public sealed partial class RCDSystem : EntitySystem
                     if (!entXformPost.Anchored && !overlapNow)
                         _transform.AnchorEntity(ent, entXformPost);
                 }
+
+                // Starlight-start
+                // Paint what we just built. The colour component is server only, so the actual
+                // painting is left to a server system listening for this.
+                if (component.PipeColor != null &&
+                    component.PipeColorPalette.TryGetValue(component.PipeColor, out var pipeColor))
+                {
+                    var pipeColorEv = new RCDPipeColorEvent(pipeColor);
+                    RaiseLocalEvent(ent, ref pipeColorEv);
+                }
+                // Starlight-end
 
                 _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used {ToPrettyString(uid):rcd} to spawn {ToPrettyString(ent)} at {position} on grid {gridUid}"); // Starlight, RCD uid
                 break;

@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/06/2026 16:33:41
-  entityCount: 29958
+  time: 08/06/2026 18:05:16
+  entityCount: 29961
 maps:
 - 1
 grids:
@@ -14674,7 +14674,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -347732.94
+      secondsUntilStateChange: -348574.47
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14686,7 +14686,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -347739.44
+      secondsUntilStateChange: -348580.97
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14698,7 +14698,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -347740.12
+      secondsUntilStateChange: -348581.66
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14712,7 +14712,7 @@ entities:
       pos: 55.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -135188.39
+      secondsUntilStateChange: -136029.92
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16001,7 +16001,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -439436.22
+      secondsUntilStateChange: -440277.75
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -31154,7 +31154,7 @@ entities:
   - uid: 3198
     components:
     - type: Transform
-      pos: 37.5,49.5
+      pos: 36.5,51.5
       parent: 2
   - uid: 3199
     components:
@@ -31164,17 +31164,17 @@ entities:
   - uid: 3200
     components:
     - type: Transform
-      pos: 35.5,52.5
+      pos: 34.5,51.5
       parent: 2
   - uid: 3201
     components:
     - type: Transform
-      pos: 35.5,51.5
+      pos: 34.5,52.5
       parent: 2
   - uid: 3202
     components:
     - type: Transform
-      pos: 35.5,50.5
+      pos: 36.5,50.5
       parent: 2
   - uid: 3203
     components:
@@ -31249,7 +31249,7 @@ entities:
   - uid: 3217
     components:
     - type: Transform
-      pos: 35.5,49.5
+      pos: 34.5,50.5
       parent: 2
   - uid: 3218
     components:
@@ -44611,6 +44611,16 @@ entities:
     - type: Transform
       pos: 23.5,-17.5
       parent: 2
+  - uid: 17620
+    components:
+    - type: Transform
+      pos: 36.5,48.5
+      parent: 2
+  - uid: 17622
+    components:
+    - type: Transform
+      pos: 36.5,52.5
+      parent: 2
   - uid: 18028
     components:
     - type: Transform
@@ -44964,7 +44974,7 @@ entities:
   - uid: 5962
     components:
     - type: Transform
-      pos: 55.5,27.5
+      pos: 56.5,28.5
       parent: 2
   - uid: 5963
     components:
@@ -44974,7 +44984,7 @@ entities:
   - uid: 5964
     components:
     - type: Transform
-      pos: 56.5,27.5
+      pos: 57.5,28.5
       parent: 2
   - uid: 5965
     components:
@@ -54805,6 +54815,11 @@ entities:
     components:
     - type: Transform
       pos: 13.5,8.5
+      parent: 2
+  - uid: 17627
+    components:
+    - type: Transform
+      pos: 55.5,28.5
       parent: 2
   - uid: 29249
     components:
@@ -96430,13 +96445,6 @@ entities:
       color: '#947507FF'
 - proto: GasPassiveGate
   entities:
-  - uid: 9638
-    components:
-    - type: Transform
-      pos: 24.5,-21.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 13929
     components:
     - type: Transform
@@ -101008,14 +101016,12 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 17548
+  - uid: 17535
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 25.5,-23.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 17549
     components:
     - type: Transform
@@ -133344,6 +133350,14 @@ entities:
       color: '#990000FF'
 - proto: GasPressurePump
   entities:
+  - uid: 9638
+    components:
+    - type: Transform
+      pos: 24.5,-21.5
+      parent: 2
+    - type: GasPressurePump
+      targetPressure: 110
+      enabled: True
   - uid: 17929
     components:
     - type: Transform
@@ -178754,15 +178768,13 @@ entities:
     - type: Transform
       pos: 25.599222,-30.709644
       parent: 2
-- proto: ToolboxElectrical
-  entities:
-  - uid: 24794
-    components:
-    - type: Transform
-      pos: 35.465008,48.717598
-      parent: 2
 - proto: ToolboxElectricalFilled
   entities:
+  - uid: 17607
+    components:
+    - type: Transform
+      pos: 35.503006,48.783386
+      parent: 2
   - uid: 24795
     components:
     - type: Transform
@@ -178812,15 +178824,13 @@ entities:
     - type: Transform
       pos: 13.535848,-30.475775
       parent: 2
-- proto: ToolboxMechanical
-  entities:
-  - uid: 24804
-    components:
-    - type: Transform
-      pos: 35.496258,48.459785
-      parent: 2
 - proto: ToolboxMechanicalFilled
   entities:
+  - uid: 17548
+    components:
+    - type: Transform
+      pos: 35.503006,48.525574
+      parent: 2
   - uid: 24805
     components:
     - type: Transform
@@ -195755,11 +195765,6 @@ entities:
       parent: 2
 - proto: Windoor
   entities:
-  - uid: 17535
-    components:
-    - type: Transform
-      pos: 24.5,-23.5
-      parent: 2
   - uid: 27999
     components:
     - type: Transform
@@ -195820,6 +195825,15 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -12.5,13.5
       parent: 2
+- proto: WindoorSecure
+  entities:
+  - uid: 17615
+    components:
+    - type: Transform
+      pos: 24.5,-23.5
+      parent: 2
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: WindoorSecureAtmosphericsLocked
   entities:
   - uid: 28009

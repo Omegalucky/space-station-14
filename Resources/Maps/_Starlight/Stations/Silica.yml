@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/06/2026 15:36:11
-  entityCount: 29963
+  time: 08/06/2026 16:33:41
+  entityCount: 29958
 maps:
 - 1
 grids:
@@ -10980,20 +10980,6 @@ entities:
       - 18076
     - type: Fixtures
       fixtures: {}
-  - uid: 24
-    components:
-    - type: MetaData
-      name: air alarm (TEG Burn Chamber)
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 56.5,36.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 29692
-      - 29693
-    - type: Fixtures
-      fixtures: {}
   - uid: 25
     components:
     - type: MetaData
@@ -12618,32 +12604,6 @@ entities:
       - 16321
     - type: Fixtures
       fixtures: {}
-  - uid: 110
-    components:
-    - type: MetaData
-      name: air alarm (Test Chamber West)
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -4.5,47.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 511
-    - type: Fixtures
-      fixtures: {}
-  - uid: 111
-    components:
-    - type: MetaData
-      name: air alarm (Test Chamber East)
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 6.5,47.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 512
-    - type: Fixtures
-      fixtures: {}
   - uid: 112
     components:
     - type: MetaData
@@ -13065,34 +13025,6 @@ entities:
       devices:
       - 18333
       - 28412
-    - type: Fixtures
-      fixtures: {}
-  - uid: 134
-    components:
-    - type: MetaData
-      name: air alarm (Xenobio)
-    - type: Transform
-      pos: 13.5,43.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 634
-      - 14328
-      - 14347
-      - 14419
-      - 29885
-      - 29899
-      - 18183
-      - 28345
-      - 18188
-      - 28344
-      - 29887
-      - 28343
-      - 17371
-      - 28449
-    - type: AccessReader
-      accessListsOriginal:
-      - - Atmospherics
     - type: Fixtures
       fixtures: {}
   - uid: 135
@@ -13545,6 +13477,24 @@ entities:
       currentLabel: Virology
     - type: NameModifier
       baseName: air alarm
+  - uid: 17598
+    components:
+    - type: MetaData
+      name: air alarm (Xenobiology)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,39.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 28449
+      - 17371
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Xenobiology
+    - type: NameModifier
+      baseName: air alarm
   - uid: 28316
     components:
     - type: Transform
@@ -13592,20 +13542,6 @@ entities:
       devices:
       - 18261
       - 15696
-    - type: Fixtures
-      fixtures: {}
-  - uid: 30035
-    components:
-    - type: MetaData
-      name: air alarm (Burn Chamber)
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 68.5,36.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 29766
-      - 29767
     - type: Fixtures
       fixtures: {}
   - uid: 30372
@@ -13736,6 +13672,86 @@ entities:
       - 29193
     - type: Fixtures
       fixtures: {}
+- proto: AirAlarmChamber
+  entities:
+  - uid: 24
+    components:
+    - type: MetaData
+      name: air alarm (TEG Burn Chamber)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 56.5,36.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 17592
+      - 14815
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: TEG Burn Chamber
+    - type: NameModifier
+      baseName: air alarm
+  - uid: 511
+    components:
+    - type: MetaData
+      name: air alarm (Burn Chamber)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 68.5,36.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 17597
+      - 17594
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Burn Chamber
+    - type: NameModifier
+      baseName: air alarm
+- proto: AirAlarmChamberUnlocked
+  entities:
+  - uid: 110
+    components:
+    - type: MetaData
+      name: air alarm (Artifact Chamber East)
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,47.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 8324
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Artifact Chamber East
+    - type: NameModifier
+      baseName: air alarm
+  - uid: 111
+    components:
+    - type: MetaData
+      name: air alarm (Artifact Chamber West)
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,47.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 512
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Artifact Chamber West
+    - type: NameModifier
+      baseName: air alarm
 - proto: AirAlarmFreezer
   entities:
   - uid: 156
@@ -13765,6 +13781,31 @@ entities:
       - 9237
     - type: Fixtures
       fixtures: {}
+- proto: AirAlarmUnlocked
+  entities:
+  - uid: 134
+    components:
+    - type: MetaData
+      name: air alarm (Xenobiology Chambers)
+    - type: Transform
+      pos: 13.5,43.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 28343
+      - 29887
+      - 28344
+      - 18188
+      - 28345
+      - 18183
+      - 29899
+      - 29885
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Xenobiology Chambers
+    - type: NameModifier
+      baseName: air alarm
 - proto: AirAlarmVox
   entities:
   - uid: 157
@@ -14633,7 +14674,7 @@ entities:
       pos: -29.5,-12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -344785.22
+      secondsUntilStateChange: -347732.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14645,7 +14686,7 @@ entities:
       pos: 30.5,-28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -344791.72
+      secondsUntilStateChange: -347739.44
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14657,7 +14698,7 @@ entities:
       pos: 30.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -344792.4
+      secondsUntilStateChange: -347740.12
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14671,7 +14712,7 @@ entities:
       pos: 55.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -132240.67
+      secondsUntilStateChange: -135188.39
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15960,7 +16001,7 @@ entities:
       pos: 36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -436488.5
+      secondsUntilStateChange: -439436.22
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16137,22 +16178,6 @@ entities:
       deviceLists:
       - 32
       - 14229
-  - uid: 511
-    components:
-    - type: Transform
-      pos: -2.5,49.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 110
-  - uid: 512
-    components:
-    - type: Transform
-      pos: 4.5,49.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 111
   - uid: 513
     components:
     - type: Transform
@@ -17035,7 +17060,6 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 134
       - 14308
   - uid: 635
     components:
@@ -17251,6 +17275,29 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 107
+- proto: AirSensorChamber
+  entities:
+  - uid: 512
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,49.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 111
+  - uid: 8324
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 4.5,49.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 110
+    - type: AccessReader
+      accessListsOriginal:
+      - - Atmospherics
 - proto: AirSensorFreezer
   entities:
   - uid: 649
@@ -56853,11 +56900,6 @@ entities:
     - type: Transform
       pos: 26.5,12.5
       parent: 2
-  - uid: 8324
-    components:
-    - type: Transform
-      pos: 27.5,12.5
-      parent: 2
   - uid: 8325
     components:
     - type: Transform
@@ -56866,22 +56908,17 @@ entities:
   - uid: 8326
     components:
     - type: Transform
-      pos: 27.5,11.5
+      pos: 27.5,12.5
       parent: 2
   - uid: 8327
     components:
     - type: Transform
-      pos: 27.5,10.5
+      pos: 28.5,11.5
       parent: 2
   - uid: 8328
     components:
     - type: Transform
-      pos: 27.5,9.5
-      parent: 2
-  - uid: 8329
-    components:
-    - type: Transform
-      pos: 28.5,9.5
+      pos: 27.5,11.5
       parent: 2
   - uid: 8330
     components:
@@ -91831,7 +91868,6 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 134
       - 14308
   - uid: 14329
     components:
@@ -91994,7 +92030,6 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 134
       - 14308
   - uid: 14348
     components:
@@ -92658,7 +92693,6 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 134
       - 14308
   - uid: 14420
     components:
@@ -96413,14 +96447,6 @@ entities:
       pipeLayer: Quinary
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 14815
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -1.5,-14.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
 - proto: GasPassiveGateAlt3
   entities:
   - uid: 14992
@@ -100571,18 +100597,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 29423
-    components:
-    - type: Transform
-      anchored: False
-      rot: -1.5707963267948966 rad
-      pos: 2.5,-13.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 29430
     components:
     - type: Transform
@@ -133433,6 +133447,8 @@ entities:
     - type: Transform
       pos: 53.5,44.5
       parent: 2
+    - type: AtmosPipeColor
+      color: '#333333FF'
   - uid: 29736
     components:
     - type: Transform
@@ -134075,7 +134091,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 134
+      - 17598
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 17417
@@ -135935,52 +135951,6 @@ entities:
       - 157
     - type: AtmosPipeColor
       color: '#FF1212FF'
-- proto: GasVentScrubber
-  entities:
-  - uid: 29692
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 59.5,33.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 24
-    - type: AtmosPipeColor
-      color: '#990000FF'
-  - uid: 29693
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 59.5,31.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 24
-    - type: AtmosPipeColor
-      color: '#990000FF'
-  - uid: 29766
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 65.5,33.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 30035
-    - type: AtmosPipeColor
-      color: '#8DE969FF'
-  - uid: 29767
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 65.5,31.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 30035
-    - type: AtmosPipeColor
-      color: '#8DE969FF'
 - proto: GasVentScrubberAlt4
   entities:
   - uid: 515
@@ -137147,7 +137117,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 134
+      - 17598
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 28512
@@ -138278,6 +138248,52 @@ entities:
       - 102
     - type: AtmosPipeColor
       color: '#990000FF'
+- proto: GasVentScrubberChamber
+  entities:
+  - uid: 14815
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 59.5,31.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 24
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 17592
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 59.5,33.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 24
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 17594
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 65.5,31.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 511
+    - type: AtmosPipeColor
+      color: '#8DE969FF'
+  - uid: 17597
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 65.5,33.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 511
+    - type: AtmosPipeColor
+      color: '#8DE969FF'
 - proto: GasVentScrubberFreezerAlt4
   entities:
   - uid: 18362
@@ -150731,14 +150747,6 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-  - uid: 20407
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,39.5
-      parent: 2
-    - type: Fixtures
-      fixtures: {}
   - uid: 20408
     components:
     - type: Transform
@@ -158913,15 +158921,15 @@ entities:
       parent: 2
 - proto: RandomArtifactSpawner
   entities:
-  - uid: 21738
+  - uid: 8329
     components:
     - type: Transform
-      pos: 5.5,50.5
+      pos: 4.5,50.5
       parent: 2
-  - uid: 21739
+  - uid: 9155
     components:
     - type: Transform
-      pos: -2.5,49.5
+      pos: -2.5,50.5
       parent: 2
 - proto: RandomBrownStalagmite
   entities:
